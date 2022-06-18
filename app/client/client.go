@@ -30,13 +30,16 @@ func Run() {
 		http.StatusInternalServerError,
 	}
 	for {
-		delay := random.Intn(2000)
+
 		for i := 0; i < len(statuses); i++ {
 			status := statuses[random.Intn(len(statuses))]
 			query := &url.Values{}
 			query.Set("status", fmt.Sprint(status))
+			sleep := random.Intn(1000)
+			query.Set("sleep", fmt.Sprintf("%dms", sleep))
 			go Request(query)
 		}
+		delay := random.Intn(2000)
 		time.Sleep(time.Millisecond * time.Duration(delay))
 	}
 }

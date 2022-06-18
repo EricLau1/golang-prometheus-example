@@ -1,3 +1,6 @@
+run:
+	@go run main.go
+
 ps:
 	@docker images
 	@docker ps
@@ -13,3 +16,4 @@ clear:
 	- @docker rm -f prometheus
 	- @docker rm -f golang-prometheus-example
 	- @docker volume prune
+	- @docker rmi -f golang-prometheus-example

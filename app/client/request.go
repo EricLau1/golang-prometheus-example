@@ -19,10 +19,11 @@ func Request(query *url.Values) {
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		log.Println("[ERROR]", err.Error())
+	} else {
+		b, err := httputil.DumpResponse(res, true)
+		if err != nil {
+			log.Println("[ERROR]", err.Error())
+		}
+		fmt.Println(string(b))
 	}
-	b, err := httputil.DumpResponse(res, true)
-	if err != nil {
-		log.Println("[ERROR]", err.Error())
-	}
-	fmt.Println(string(b))
 }

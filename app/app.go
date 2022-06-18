@@ -7,7 +7,6 @@ import (
 	"golang-prometheus-example/app/httpext"
 	"golang-prometheus-example/app/router"
 	"log"
-	"net/http"
 	"os"
 )
 
@@ -22,12 +21,8 @@ func New() {
 	exit.Graceful(func() {
 		log.Println("Stop.")
 	})
-	methods := handlers.AllowedMethods([]string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete})
-	headers := handlers.AllowedHeaders([]string{"Content-Type", "Accept", "X-Requested-with"})
-	origins := handlers.AllowedOrigins([]string{"*"})
 	handler := handlers.LoggingHandler(os.Stdout, router.New())
-	handler = handlers.CORS(methods, headers, origins)(handler)
-	httpext.Listen(port, handler, func() {
+	httpext.Listen(port, router.WithCORS(handler), func() {
 		log.Printf("Listening http://localhost:%d\n\n", port)
 	})
 }

@@ -25,8 +25,9 @@ var (
 
 	httpDuration = prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
-			Name: "http_response_time_seconds",
-			Help: "Duração das respostas HTTP",
+			Name:    "http_response_time_seconds",
+			Help:    "Duração das respostas HTTP",
+			Buckets: []float64{0.05, 0.1, 0.2, 0.3, 0.4, 0.5}, // buckets in milliseconds
 		},
 		[]string{"path"},
 	)
@@ -53,6 +54,6 @@ func Metrics(next http.Handler) http.Handler {
 		responseStatus.WithLabelValues(rw.StringStatus()).Inc()
 		totalRequests.WithLabelValues(path).Inc()
 
-		timer.ObserveDuration()
+		_ = timer.ObserveDuration()
 	})
 }
