@@ -17,3 +17,9 @@ clear:
 	- @docker rm -f golang-prometheus-example
 	- @docker volume prune
 	- @docker rmi -f golang-prometheus-example
+
+clients:
+	@go run cmd/clients/main.go
+
+jobs:
+	@go run cmd/jobs/main.go

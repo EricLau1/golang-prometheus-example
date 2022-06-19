@@ -12,3 +12,8 @@ scrape_configs:
     static_configs:
       - targets:
           - app:8080
+  - job_name: pushgateway
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+          - pushgateway:9091
